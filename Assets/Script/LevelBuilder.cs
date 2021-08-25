@@ -21,6 +21,10 @@ public class LevelBuilder : MonoBehaviour
         _exeption = new List<int>();
 
         _tasksArray = _level.Task.Split(',');
+        for (int i = 0; i < _tasksArray.Length; i++)
+        {
+            _exeption.Add(i);
+        }
 
         BuildNewLevel();
     }
@@ -41,8 +45,17 @@ public class LevelBuilder : MonoBehaviour
             {
                 DeliteCurrentLevel();
             }
-            int rightAnswer = GetRandomIntWrongElement(_tasksArray.Length);
-            _exeption.Add(rightAnswer);                      
+            int rightAnswer = 0;
+            try
+            {
+                rightAnswer = _exeption[Random.Range(0, _exeption.Count - 1)];
+            }
+            catch
+            {
+                Debug.Log("error");
+            }
+            _exeption.Remove(rightAnswer);
+
             _task.text = "Find " + _tasksArray[rightAnswer];
 
             int complexity = _level.Level—omplexity[_currentLevel];
@@ -69,7 +82,7 @@ public class LevelBuilder : MonoBehaviour
                     }
                     else
                     {
-                        SetSettings(gameObject, i, j, GetRandomIntRightElement(_tasksArray.Length, rightAnswer), StartPosX, StartPosY);
+                        SetSettings(gameObject, i, j, GetRandomIntWrongElement(_tasksArray.Length, rightAnswer), StartPosX, StartPosY);
                     }
                     count++;
                 }
@@ -126,35 +139,13 @@ public class LevelBuilder : MonoBehaviour
         gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(j * 80 - startPosX, i * 80 - startPosY, 0);
     }
 
-    private int GetRandomIntWrongElement(int range)
-    {
-        int RandomInt = Random.Range(0, range);
-        foreach (int IntExeprion in _exeption)
-        {
-            if (RandomInt == IntExeprion)
-            {
-                try
-                {
-                    RandomInt = GetRandomIntWrongElement(range);
-                }
-                catch
-                {
-                    Debug.Log("Error");
-                }
-
-            }
-        }
-
-        return RandomInt;
-    }
-
-    private int GetRandomIntRightElement(int range, int exeprion)
+    private int GetRandomIntWrongElement(int range, int exeprion)
     {
         int RandomInt = Random.Range(0, range);
 
         if (RandomInt == exeprion)
         {
-            RandomInt = GetRandomIntRightElement(range, exeprion);
+            RandomInt = GetRandomIntWrongElement(range, exeprion);
         }
 
         return RandomInt;
@@ -171,7 +162,7 @@ public class LevelBuilder : MonoBehaviour
 
     private void RestartLevel()
     {
-        if (_tasksArray.Length >= _tasksArray.Length + _level.Level—omplexity.Length - _exeption.Count)
+        if (_exeption.Count >= _level.Level—omplexity.Length)
         {
             _currentLevel = 0;
 
@@ -183,7 +174,6 @@ public class LevelBuilder : MonoBehaviour
         else
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            Debug.Log("New scene");
         }
     }
 }
