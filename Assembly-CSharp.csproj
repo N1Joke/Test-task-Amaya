@@ -56,11 +56,14 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Script\Level.cs" />
+    <Compile Include="Assets\Script\Effects\FadeEffect.cs" />
     <Compile Include="Assets\Script\LevelBuilder.cs" />
-    <Compile Include="Assets\Script\RightAnswer.cs" />
+    <Compile Include="Assets\Script\Effects\CellRandomColor.cs" />
     <Compile Include="Assets\Script\ClickElement.cs" />
+    <Compile Include="Assets\Script\Level.cs" />
+    <Compile Include="Assets\Script\RightAnswer.cs" />
     <Compile Include="Assets\Script\ClickRestart.cs" />
+    <Compile Include="Assets\Script\StartBounce.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -285,11 +288,11 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>D:\Unity\Editor\Unity\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="DOTween">
       <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:\Unity\Editor\Unity\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>
@@ -728,9 +731,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{F7B46A50-D2CC-A135-8275-B26BD66C9973}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
+    <ProjectReference Include="DOTween.Modules.csproj">
+      <Project>{A3D27E71-E0CF-CBB3-7AE2-5E137B1DCE77}</Project>
+      <Name>DOTween.Modules</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

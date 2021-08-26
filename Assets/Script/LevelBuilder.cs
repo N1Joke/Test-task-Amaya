@@ -10,6 +10,7 @@ public class LevelBuilder : MonoBehaviour
     [SerializeField] private GameObject _elementTemplate;
     [SerializeField] private RectTransform _parent;
     [SerializeField] private GameObject _buttonRestart;
+    [SerializeField] private GameObject _cell;
 
     private List<int> _exeption;
     private string[] _tasksArray;
@@ -72,17 +73,18 @@ public class LevelBuilder : MonoBehaviour
             {
                 for (int j = 0; j < levelSize[1]; j++)
                 {
-                    GameObject gameObject = Instantiate(_elementTemplate, _parent);
+                    GameObject elementGobj = Instantiate(_elementTemplate, _parent);
+                    GameObject cellGobj = Instantiate(_cell, _parent); 
                     if (indexOfRightAnswer == count)
                     {
-                        SetSettings(gameObject, i, j, rightAnswer, StartPosX, StartPosY);
-                        gameObject.AddComponent(typeof(RightAnswer));
-                        _correctAnswer = gameObject;
+                        SetSettings(elementGobj, i, j, rightAnswer, StartPosX, StartPosY, cellGobj);
+                        elementGobj.AddComponent(typeof(RightAnswer));
+                        _correctAnswer = elementGobj;
                         _correctAnswer.GetComponent<ClickElement>().CorrectAnswer.AddListener(ButttonAnswer);
                     }
                     else
                     {
-                        SetSettings(gameObject, i, j, GetRandomIntWrongElement(_tasksArray.Length, rightAnswer), StartPosX, StartPosY);
+                        SetSettings(elementGobj, i, j, GetRandomIntWrongElement(_tasksArray.Length, rightAnswer), StartPosX, StartPosY , cellGobj);
                     }
                     count++;
                 }
@@ -133,10 +135,11 @@ public class LevelBuilder : MonoBehaviour
         return size;
     }
 
-    private void SetSettings(GameObject gameObject, int i, int j, int index, float startPosX, float startPosY)
+    private void SetSettings(GameObject element, int i, int j, int index, float startPosX, float startPosY, GameObject cell)
     {
-        gameObject.GetComponent<Image>().sprite = _level.SpriteSheet[index];
-        gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(j * 80 - startPosX, i * 80 - startPosY, 0);
+        element.GetComponent<Image>().sprite = _level.SpriteSheet[index];
+        element.GetComponent<RectTransform>().anchoredPosition = new Vector3(j * 85 - startPosX, i * 85 - startPosY, 0);
+        cell.GetComponent<RectTransform>().anchoredPosition = new Vector3(j * 85 - startPosX, i * 85 - startPosY, 0);
     }
 
     private int GetRandomIntWrongElement(int range, int exeprion)

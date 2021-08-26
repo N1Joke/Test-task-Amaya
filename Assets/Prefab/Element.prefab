@@ -136,3 +136,5 @@ MonoBehaviour:
   CorrectAnswer:
     m_PersistentCalls:
       m_Calls: []
+  _bounceEffect: {fileID: 0}
+  _shakeEffect: {fileID: 0}
