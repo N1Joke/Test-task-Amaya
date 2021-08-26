@@ -16,6 +16,7 @@ public class LevelBuilder : MonoBehaviour
     private string[] _tasksArray;
     private int _currentLevel;
     private GameObject _correctAnswer;
+    private bool _bounceOnStart = true;
 
     private void Start()
     {
@@ -74,7 +75,7 @@ public class LevelBuilder : MonoBehaviour
                 for (int j = 0; j < levelSize[1]; j++)
                 {
                     GameObject elementGobj = Instantiate(_elementTemplate, _parent);
-                    GameObject cellGobj = Instantiate(_cell, _parent); 
+                    GameObject cellGobj = Instantiate(_cell, _parent);
                     if (indexOfRightAnswer == count)
                     {
                         SetSettings(elementGobj, i, j, rightAnswer, StartPosX, StartPosY, cellGobj);
@@ -84,11 +85,13 @@ public class LevelBuilder : MonoBehaviour
                     }
                     else
                     {
-                        SetSettings(elementGobj, i, j, GetRandomIntWrongElement(_tasksArray.Length, rightAnswer), StartPosX, StartPosY , cellGobj);
+                        SetSettings(elementGobj, i, j, GetRandomIntWrongElement(_tasksArray.Length, rightAnswer), StartPosX, StartPosY, cellGobj);
                     }
                     count++;
                 }
             }
+
+            _bounceOnStart = false;
 
             _currentLevel++;
 
@@ -137,9 +140,16 @@ public class LevelBuilder : MonoBehaviour
 
     private void SetSettings(GameObject element, int i, int j, int index, float startPosX, float startPosY, GameObject cell)
     {
-        element.GetComponent<Image>().sprite = _level.SpriteSheet[index];
-        element.GetComponent<RectTransform>().anchoredPosition = new Vector3(j * 85 - startPosX, i * 85 - startPosY, 0);
+        Image image = element.GetComponent<Image>();
+        image.sprite = _level.SpriteSheet[index];
+        RectTransform rectTransform = element.GetComponent<RectTransform>();
+        rectTransform.sizeDelta = new Vector2(image.preferredWidth / 4, image.preferredHeight / 4);
+        rectTransform.anchoredPosition = new Vector3(j * 85 - startPosX, i * 85 - startPosY, 0);
         cell.GetComponent<RectTransform>().anchoredPosition = new Vector3(j * 85 - startPosX, i * 85 - startPosY, 0);
+        if (_bounceOnStart)
+        {
+            element.GetComponent<StartIntro>().DoStartIntro();
+        }
     }
 
     private int GetRandomIntWrongElement(int range, int exeprion)
@@ -159,6 +169,7 @@ public class LevelBuilder : MonoBehaviour
         if (!BuildNewLevel())
         {
             _buttonRestart.GetComponent<ClickRestart>().Restart.AddListener(RestartLevel);
+            DisableButtons();
             _buttonRestart.SetActive(true);
         }
     }
@@ -177,6 +188,15 @@ public class LevelBuilder : MonoBehaviour
         else
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    private void DisableButtons()
+    {
+        foreach (Transform transform in _parent.transform)
+        {
+            if (transform.TryGetComponent<ClickElement>(out ClickElement clickElement))
+                clickElement.DisableButton();
         }
     }
 }

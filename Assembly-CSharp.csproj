@@ -63,7 +63,7 @@
     <Compile Include="Assets\Script\Level.cs" />
     <Compile Include="Assets\Script\RightAnswer.cs" />
     <Compile Include="Assets\Script\ClickRestart.cs" />
-    <Compile Include="Assets\Script\StartBounce.cs" />
+    <Compile Include="Assets\Script\StartIntro.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

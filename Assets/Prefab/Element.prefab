@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8090442352805761943}
   - component: {fileID: 8090442352805761928}
   - component: {fileID: 7106771831066175981}
+  - component: {fileID: 3587825835189515246}
   m_Layer: 5
   m_Name: Element
   m_TagString: Untagged
@@ -96,7 +97,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -104,7 +105,7 @@ MonoBehaviour:
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
+    m_FadeDuration: 0
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
@@ -136,5 +137,15 @@ MonoBehaviour:
   CorrectAnswer:
     m_PersistentCalls:
       m_Calls: []
-  _bounceEffect: {fileID: 0}
-  _shakeEffect: {fileID: 0}
+--- !u!114 &3587825835189515246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8090442352805761930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 955ec8af13d514a44ac6d090b63dc8ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

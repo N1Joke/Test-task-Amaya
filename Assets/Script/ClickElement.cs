@@ -6,8 +6,9 @@ using System.Collections;
 
 public class ClickElement : MonoBehaviour
 { 
-    public UnityEvent CorrectAnswer;    
-    
+    public UnityEvent CorrectAnswer;
+    private bool _NotAnswerOnClick = false;
+
     private void Start()
     {
         Button button = this.gameObject.GetComponent<Button>();
@@ -16,22 +17,34 @@ public class ClickElement : MonoBehaviour
 
     private void TaskOnClick()
     {
-        TryGetComponent(out RightAnswer rightAnswer);
-        if (rightAnswer != null)
+        if (!_NotAnswerOnClick)
         {
-            StartCoroutine(ShakeAndBounceCoroutine(true, false, true));
-        }
-        else
-        {
-            StartCoroutine(ShakeAndBounceCoroutine(false, true, false));
+            TryGetComponent(out RightAnswer rightAnswer);
+            if (rightAnswer != null)
+            {
+                StartCoroutine(ShakeAndBounceCoroutine(true, false, true));
+            }
+            else
+            {
+                StartCoroutine(ShakeAndBounceCoroutine(false, true, false));
+            }
         }
     }
 
-    IEnumerator ShakeAndBounceCoroutine(bool bounce = false, bool shake = false, bool rightAnswer = false)
+    public IEnumerator ShakeAndBounceCoroutine(bool bounce = false, bool shake = false, bool rightAnswer = false, float waitBeforeAction = 0f)
     {
+        if (waitBeforeAction != 0f)
+        {
+            yield return new WaitForSeconds(waitBeforeAction);
+        }
+
         if (bounce)
         {
-            transform.DOShakeScale(0.5f, strength: new Vector3(0.1f * Mathf.Sign(this.transform.position.x), 0.1f * Mathf.Sign(this.transform.position.y), 0), vibrato: 0, randomness: 0, fadeOut: false);
+            //RectTransform rectTransform = GetComponent<RectTransform>();
+            //transform.DOShakeScale(0.5f, strength: new Vector3(0.01f * rectTransform.sizeDelta.x, 0.01f * rectTransform.sizeDelta.y, 0), vibrato: 0, randomness: 1, fadeOut: true);
+            RectTransform rectTransform = GetComponent<RectTransform>();
+            //rectTransform.DOShakeScale(5f, strength: new Vector3(0.01f * rectTransform.sizeDelta.x, 0.01f * rectTransform.sizeDelta.y, 0), 0,0);
+            rectTransform.DOPunchScale(new Vector3(-0.005f * rectTransform.sizeDelta.x, -0.005f * rectTransform.sizeDelta.y, 0), 0.5f, 0, 0);
         }
         else if (shake)
         {
@@ -40,13 +53,18 @@ public class ClickElement : MonoBehaviour
 
         if (rightAnswer)
         {
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(0.5f);
             CorrectAnswer?.Invoke();
         }
         else if (bounce)
-            yield return new WaitForSeconds(0.8f);
+            yield return new WaitForSeconds(0.5f);
         else if (shake)
             yield return new WaitForSeconds(1.5f);
+    }
+
+    public void DisableButton()
+    {
+        _NotAnswerOnClick = true;
     }
 }
 
