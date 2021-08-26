@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Task: A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z
   "Level\u0421omplexity": 030000000600000009000000
+  SpriteScaleFactor: 5
   SpriteSheet:
   - {fileID: 4963718625464178563, guid: 4f56a04444d7b394f95d62a390706199, type: 3}
   - {fileID: 7783457984840754399, guid: 4f56a04444d7b394f95d62a390706199, type: 3}

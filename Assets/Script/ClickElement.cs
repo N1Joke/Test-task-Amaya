@@ -5,9 +5,10 @@ using DG.Tweening;
 using System.Collections;
 
 public class ClickElement : MonoBehaviour
-{ 
+{
     public UnityEvent CorrectAnswer;
     private bool _NotAnswerOnClick = false;
+    [SerializeField] private ParticleSystem _stars;
 
     private void Start()
     {
@@ -22,6 +23,7 @@ public class ClickElement : MonoBehaviour
             TryGetComponent(out RightAnswer rightAnswer);
             if (rightAnswer != null)
             {
+                _stars.Emit(5);
                 StartCoroutine(ShakeAndBounceCoroutine(true, false, true));
             }
             else
@@ -40,10 +42,7 @@ public class ClickElement : MonoBehaviour
 
         if (bounce)
         {
-            //RectTransform rectTransform = GetComponent<RectTransform>();
-            //transform.DOShakeScale(0.5f, strength: new Vector3(0.01f * rectTransform.sizeDelta.x, 0.01f * rectTransform.sizeDelta.y, 0), vibrato: 0, randomness: 1, fadeOut: true);
             RectTransform rectTransform = GetComponent<RectTransform>();
-            //rectTransform.DOShakeScale(5f, strength: new Vector3(0.01f * rectTransform.sizeDelta.x, 0.01f * rectTransform.sizeDelta.y, 0), 0,0);
             rectTransform.DOPunchScale(new Vector3(-0.005f * rectTransform.sizeDelta.x, -0.005f * rectTransform.sizeDelta.y, 0), 0.5f, 0, 0);
         }
         else if (shake)
@@ -67,4 +66,3 @@ public class ClickElement : MonoBehaviour
         _NotAnswerOnClick = true;
     }
 }
-

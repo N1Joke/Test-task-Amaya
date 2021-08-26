@@ -2,16 +2,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class LevelBuilder : MonoBehaviour
 {
-    [SerializeField] private Level _level;
+    [SerializeField] private Level[] _AllPossibleLevels;
     [SerializeField] private Text _task;
     [SerializeField] private GameObject _elementTemplate;
     [SerializeField] private RectTransform _parent;
     [SerializeField] private GameObject _buttonRestart;
     [SerializeField] private GameObject _cell;
+    [SerializeField] private GameObject _backGroundLoad;
 
+    private Level _level;
     private List<int> _exeption;
     private string[] _tasksArray;
     private int _currentLevel;
@@ -20,6 +23,8 @@ public class LevelBuilder : MonoBehaviour
 
     private void Start()
     {
+        _level = _AllPossibleLevels[Random.Range(0, _AllPossibleLevels.Length)];
+
         _exeption = new List<int>();
 
         _tasksArray = _level.Task.Split(',');
@@ -143,7 +148,7 @@ public class LevelBuilder : MonoBehaviour
         Image image = element.GetComponent<Image>();
         image.sprite = _level.SpriteSheet[index];
         RectTransform rectTransform = element.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(image.preferredWidth / 4, image.preferredHeight / 4);
+        rectTransform.sizeDelta = new Vector2(image.preferredWidth / _level.SpriteScaleFactor, image.preferredHeight / _level.SpriteScaleFactor);
         rectTransform.anchoredPosition = new Vector3(j * 85 - startPosX, i * 85 - startPosY, 0);
         cell.GetComponent<RectTransform>().anchoredPosition = new Vector3(j * 85 - startPosX, i * 85 - startPosY, 0);
         if (_bounceOnStart)
@@ -170,25 +175,14 @@ public class LevelBuilder : MonoBehaviour
         {
             _buttonRestart.GetComponent<ClickRestart>().Restart.AddListener(RestartLevel);
             DisableButtons();
+            _backGroundLoad.GetComponent<FadeEffect>().FadeIn(1f, 0.8f, false);
             _buttonRestart.SetActive(true);
         }
     }
 
     private void RestartLevel()
     {
-        if (_exeption.Count >= _level.Level—omplexity.Length)
-        {
-            _currentLevel = 0;
-
-            DeliteCurrentLevel();
-            BuildNewLevel();
-
-            _buttonRestart.SetActive(false);
-        }
-        else
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+        StartCoroutine(DelayLoadLevel());
     }
 
     private void DisableButtons()
@@ -197,6 +191,27 @@ public class LevelBuilder : MonoBehaviour
         {
             if (transform.TryGetComponent<ClickElement>(out ClickElement clickElement))
                 clickElement.DisableButton();
+        }
+    }
+
+    private IEnumerator DelayLoadLevel()
+    {
+        _backGroundLoad.GetComponent<FadeEffect>().FadeIn(1.5f, 1.0f, false);
+        _buttonRestart.SetActive(false);
+        yield return new WaitForSeconds(1.5f);
+
+        if (_exeption.Count >= _level.Level—omplexity.Length)
+        {
+            _currentLevel = 0;
+
+            DeliteCurrentLevel();
+            BuildNewLevel();
+
+            _backGroundLoad.GetComponent<FadeEffect>().FadeIn(1f, 0.0f, false);
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }

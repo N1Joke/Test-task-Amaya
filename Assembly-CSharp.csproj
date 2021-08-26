@@ -64,6 +64,7 @@
     <Compile Include="Assets\Script\RightAnswer.cs" />
     <Compile Include="Assets\Script\ClickRestart.cs" />
     <Compile Include="Assets\Script\StartIntro.cs" />
+    <Compile Include="Assets\Script\TaskMenager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

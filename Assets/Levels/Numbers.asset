@@ -12,6 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fb7eb7bb8aab7243968f051e31c87a7, type: 3}
   m_Name: Numbers
   m_EditorClassIdentifier: 
-  Task: 
-  "Level\u0421omplexity": 0
-  SpriteSheet: {fileID: 0}
+  Task: 1,2,3,4,5,6,7,8,9,10
+  "Level\u0421omplexity": 030000000600000009000000
+  SpriteScaleFactor: 6.5
+  SpriteSheet:
+  - {fileID: 1422184923334757970, guid: d522625d708ce2f488d0b40fb09f79d3, type: 3}
+  - {fileID: 1808195818850983521, guid: d522625d708ce2f488d0b40fb09f79d3, type: 3}
+  - {fileID: -7900951133411543555, guid: d522625d708ce2f488d0b40fb09f79d3, type: 3}
+  - {fileID: 2267071060405275165, guid: d522625d708ce2f488d0b40fb09f79d3, type: 3}
+  - {fileID: -7398325283844340781, guid: d522625d708ce2f488d0b40fb09f79d3, type: 3}
+  - {fileID: -7015292045520539579, guid: d522625d708ce2f488d0b40fb09f79d3, type: 3}
+  - {fileID: -675344402919758444, guid: d522625d708ce2f488d0b40fb09f79d3, type: 3}
+  - {fileID: 3547489320769246608, guid: d522625d708ce2f488d0b40fb09f79d3, type: 3}
+  - {fileID: -1155199509967091035, guid: 66a57aa88a0311045b5f05cc7a13d44a, type: 3}
+  - {fileID: 4142021021139464533, guid: e1e27e83ec971124388e8d28edbead40, type: 3}

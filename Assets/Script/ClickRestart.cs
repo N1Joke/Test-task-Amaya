@@ -2,7 +2,6 @@ using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Events;
 
-
 public class ClickRestart : MonoBehaviour
 {
     public UnityEvent Restart;
